@@ -1,0 +1,10 @@
+com/quac/sbmod/commands/TestCommand.java
+ com.quac.sbmod.commands.TestCommand
+com/quac/sbmod/EventHandlers/TestEvents.java
+ com.quac.sbmod.EventHandlers.TestEvents
+com/quac/sbmod/Utils/C.java
+ com.quac.sbmod.Utils.C
+com/quac/sbmod/SBMod.java
+ com.quac.sbmod.SBMod
+com/quac/sbmod/Gui/GuiHandler.java
+ com.quac.sbmod.Gui.GuiHandler

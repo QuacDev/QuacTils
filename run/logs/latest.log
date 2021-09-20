@@ -1,0 +1,35 @@
+[16:24:42] [Client thread/INFO]: Setting user: AmQuac
+[16:24:43] [Client thread/INFO]: LWJGL Version: 2.9.4
+[16:24:46] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:quacsbmod, ! §2Sammyfault §a[16x].zip
+[16:24:46] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[16:24:46] [Thread-9/INFO]: Initializing LWJGL OpenAL
+[16:24:46] [Thread-9/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[16:24:46] [Thread-9/INFO]: OpenAL initialized.
+[16:24:47] [Sound Library Loader/INFO]: Sound engine started
+[16:24:49] [Client thread/INFO]: Created: 16x16 textures-atlas
+[16:24:50] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:quacsbmod, ! §2Sammyfault §a[16x].zip
+[16:24:50] [Client thread/INFO]: SoundSystem shutting down...
+[16:24:50] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
+[16:24:50] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[16:24:50] [Thread-11/INFO]: Initializing LWJGL OpenAL
+[16:24:50] [Thread-11/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[16:24:50] [Thread-11/INFO]: OpenAL initialized.
+[16:24:51] [Sound Library Loader/INFO]: Sound engine started
+[16:24:53] [Client thread/INFO]: Created: 512x512 textures-atlas
+[16:25:18] [Client thread/INFO]: Connecting to mc.hypixel.net., 25565
+[16:25:20] [Client thread/INFO]: [CHAT]                                      
+[16:25:20] [Client thread/INFO]: [CHAT]                          
+[16:25:20] [Client thread/INFO]: [CHAT] §b[MVP§2+§b] AmQuac§f §6joined the lobby!
+[16:25:20] [Client thread/INFO]: [CHAT] -----------------------------------------------------
+[16:25:20] [Client thread/INFO]: [CHAT] lily more like carried in m4
+[16:25:20] [Client thread/INFO]: [CHAT] discco sucks at mm
+[16:25:20] [Client thread/INFO]: [CHAT] -----------------------------------------------------
+[16:25:45] [Client thread/INFO]: [CHAT]  §b>§c>§a>§r §6[MVP§c++§6] Andrewliu0619liu§f §6joined the lobby! §a<§c<§b<
+[16:25:48] [Client thread/INFO]: [CHAT] §7iidark_bear§7: t
+[16:25:57] [Client thread/INFO]: [CHAT] §b[MVP§a+§b] ADSstupidcraft§f §6joined the lobby!
+[16:25:57] [Client thread/INFO]: [CHAT] Friend > Blackplatapus joined.
+[16:26:04] [Client thread/INFO]: [CHAT]  §b>§c>§a>§r §6[MVP§2++§6] 999rat§f §6joined the lobby! §a<§c<§b<
+[16:26:26] [Client thread/INFO]: [CHAT] §b[MVP§c+§b] Fenglingyun§f §6joined the lobby!
+[16:26:31] [Client thread/INFO]: Stopping!
+[16:26:31] [Client thread/INFO]: SoundSystem shutting down...
+[16:26:31] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
