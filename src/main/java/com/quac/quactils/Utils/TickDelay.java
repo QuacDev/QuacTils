@@ -1,4 +1,4 @@
-package com.quac.sbmod.Utils;
+package com.quac.quactils.Utils;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

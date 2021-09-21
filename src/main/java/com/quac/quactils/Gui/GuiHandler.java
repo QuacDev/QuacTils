@@ -1,12 +1,13 @@
-package com.quac.sbmod.Gui;
+package com.quac.quactils.Gui;
 
-import com.quac.sbmod.Utils.C;
+import com.quac.quactils.Main;
+import com.quac.quactils.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
@@ -42,10 +43,10 @@ public class GuiHandler {
             Vec3 v = Minecraft.getMinecraft().thePlayer.getPositionVector();
             String coords = "" + (int)v.xCoord + ", " + (int)v.yCoord + ", " + (int)v.zCoord;
 
-            drawString(C.C("&3FPS: " + Minecraft.getDebugFPS()), 3, 3, 1);
-            drawString(C.C("&3Ping: " + ping), 3, 13, 1);
-            drawString(C.C("&3CPS: " + lcps + " | " + rcps), 3, 23, 1);
-            drawString(C.C("&3XYZ: " + coords), 3, 33, 1);
+            if(Config.fpsCounter) drawString("FPS: " + Minecraft.getDebugFPS(), 3, 3, Config.fpsCounterColor.getRGB());
+            if(Config.pingCounter) drawString("Ping: " + ping, 3, 13, Config.pingCounterColor.getRGB());
+            if(Config.cpsCounter) drawString("CPS: " + lcps + " | " + rcps, 3, 23, Config.cpsCounterColor.getRGB());
+            if(Config.coordinates) drawString("XYZ: " + coords, 3, 33, Config.coordinatesColor.getRGB());
         }
     }
 
@@ -57,6 +58,13 @@ public class GuiHandler {
 
         if(event.buttonstate && event.button == 1) {
             r_cps.add(System.currentTimeMillis());
+        }
+    }
+
+    @SubscribeEvent
+    public void onKey(GuiScreenEvent.KeyboardInputEvent event) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_J)) {
+            Main.setGui(Main.config.gui());
         }
     }
 

@@ -1,6 +1,7 @@
-package com.quac.sbmod.commands;
+package com.quac.quactils.commands;
 
-import com.quac.sbmod.SBMod;
+import com.quac.quactils.Main;
+import com.quac.quactils.Utils.TickDelay;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -23,6 +24,7 @@ public class ConfigCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        SBMod.setGui(SBMod.config.gui());
+        Runnable runnable = () -> Main.setGui(Main.config.gui());
+        new TickDelay(runnable, 1);
     }
 }
