@@ -1,5 +1,6 @@
 package com.quac.sbmod.commands;
 
+import com.quac.sbmod.Utils.C;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +34,9 @@ public class TestCommand implements ICommand {
     public void processCommand(ICommandSender sender, String[] args) {
         if( sender instanceof EntityPlayer ) {
             EntityPlayer p = (EntityPlayer) sender;
-            p.addChatMessage(new ChatComponentText("Test Command worked"));
+            p.addChatMessage(new ChatComponentText(C.C("&aTest Command Worked")));
+            /*Runnable runnable = () -> Minecraft.getMinecraft().displayGuiScreen(new GuiMain());
+            new TickDelay(runnable, 1);*/
         }
     }
 
