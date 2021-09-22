@@ -1,15 +1,29 @@
 package com.quac.quactils.Gui;
 
+import com.quac.quactils.Gui.Screens.MainScreen;
 import com.quac.quactils.Main;
 import com.quac.quactils.config.Config;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.RGBColor;
+import sun.awt.image.PixelConverter;
 
+import java.awt.*;
+import java.awt.image.ColorModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +33,10 @@ public class GuiHandler {
 
     @SubscribeEvent
     public void test(RenderGameOverlayEvent.Post event) {
+        Minecraft instance = Minecraft.getMinecraft();
         if(event.type == RenderGameOverlayEvent.ElementType.ALL) {
+            int amountOfFeatures = 0;
+
             String ping = "Not Found!";
             if (Minecraft.getMinecraft().getNetHandler() != null) {
                 if (Minecraft.getMinecraft().getNetHandler().getPlayerInfo(Minecraft.getMinecraft().thePlayer.getUniqueID()) != null) {
@@ -41,12 +58,89 @@ public class GuiHandler {
             }
 
             Vec3 v = Minecraft.getMinecraft().thePlayer.getPositionVector();
-            String coords = "" + (int)v.xCoord + ", " + (int)v.yCoord + ", " + (int)v.zCoord;
 
-            if(Config.fpsCounter) drawString("FPS: " + Minecraft.getDebugFPS(), 3, 3, Config.fpsCounterColor.getRGB());
-            if(Config.pingCounter) drawString("Ping: " + ping, 3, 13, Config.pingCounterColor.getRGB());
-            if(Config.cpsCounter) drawString("CPS: " + lcps + " | " + rcps, 3, 23, Config.cpsCounterColor.getRGB());
-            if(Config.coordinates) drawString("XYZ: " + coords, 3, 33, Config.coordinatesColor.getRGB());
+            int bgWidth = 90;
+
+            //Gui.drawRect(x-2, y-2, x + textWidth + 2, y + fontHeight + 1, new Color(0, 0, 0, 110).getRGB());
+            int fontHeight = instance.fontRendererObj.FONT_HEIGHT;
+
+            if(Config.fpsCounter) {
+                amountOfFeatures++;
+
+                String fpsText = "FPS: " + Minecraft.getDebugFPS();
+                int x = 5;
+                int y = 5;
+
+                //int textWidth = instance.fontRendererObj.getStringWidth(fpsText);
+                if(Config.featureBackgrounds)
+                    Gui.drawRect(x-1, y-1, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
+                drawString(fpsText, x, y, Config.fpsCounterColor.getRGB());
+            }
+
+            if(Config.pingCounter) {
+                amountOfFeatures++;
+                String pingText = "Ping: " + ping;
+                int x = 5;
+                int y = 15;
+
+                //int textWidth = instance.fontRendererObj.getStringWidth(pingText);
+                if(Config.featureBackgrounds)
+                    Gui.drawRect(x-1, y-1, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
+                drawString(pingText, x, y, Config.pingCounterColor.getRGB());
+            }
+
+            if(Config.cpsCounter) {
+                amountOfFeatures++;
+                String cpsText = "CPS: " + lcps + " | " + rcps;
+                int x = 5;
+                int y = 25;
+
+                //int textWidth = instance.fontRendererObj.getStringWidth(cpsText);
+                if(Config.featureBackgrounds)
+                    Gui.drawRect(x-1, y-1, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
+                drawString(cpsText, x, y, Config.cpsCounterColor.getRGB());
+            }
+
+            if(Config.coordinates) {
+                amountOfFeatures += 3;
+                int xCoords = (int)v.xCoord;
+                int yCoords = (int)v.yCoord;
+                int zCoords = (int)v.zCoord;
+
+                int x = 5;
+                int y = 35;
+
+                //int textWidth = instance.fontRendererObj.getStringWidth(coordsText);
+                if(Config.featureBackgrounds)
+                    Gui.drawRect(x-1, y-1, x + bgWidth, y + fontHeight * 3 + 1, new Color(0, 0, 0, 110).getRGB());
+
+                drawString("X: " + xCoords, x, y, Config.coordinatesColor.getRGB());
+                drawString("Y: " + yCoords, x, y + 9, Config.coordinatesColor.getRGB());
+                drawString("Z: " + zCoords, x, y + 18, Config.coordinatesColor.getRGB());
+            }
+
+            if(Config.lookInfo) {
+                MovingObjectPosition.MovingObjectType type = instance.objectMouseOver.typeOfHit;
+                String name = "NOT FOUND";
+                String typeName = "NOT FOUND";
+                if(type == MovingObjectPosition.MovingObjectType.BLOCK) {
+                    BlockPos bp = instance.objectMouseOver.getBlockPos();
+                    IBlockState bs = Minecraft.getMinecraft().theWorld.getBlockState(bp);
+                    Block b = bs.getBlock();
+                    name = I18n.format(b.getLocalizedName());
+                    typeName = "Block";
+                } else if(type == MovingObjectPosition.MovingObjectType.ENTITY) {
+                    Entity e = instance.objectMouseOver.entityHit;
+                    name = e.getDisplayName().getFormattedText();
+                    typeName = "Entity";
+                } else { return; }
+                ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
+                int centerX = res.getScaledWidth() / 2;
+                String s1 = "Looking at: " + name;
+                String s2 = "Type: " + typeName;
+                drawString(s1, 5, 67, Config.lookInfoColor.getRGB());
+                drawString(s2, 5, 77, Config.lookInfoColor.getRGB());
+            }
         }
     }
 
@@ -62,11 +156,15 @@ public class GuiHandler {
     }
 
     @SubscribeEvent
-    public void onKey(GuiScreenEvent.KeyboardInputEvent event) {
-        if(Keyboard.isKeyDown(Keyboard.KEY_J)) {
+    public void onKey(InputEvent.KeyInputEvent event) {
+        if(Keyboard.isKeyDown(Main.configKey.getKeyCode())) {
             Main.setGui(Main.config.gui());
+        } else if(Keyboard.isKeyDown(Main.mainMenuKey.getKeyCode())) {
+            Main.setGui(new MainScreen());
         }
     }
+
+
 
     public void drawString(String text, int x, int y, int color) {
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(text, x, y, color);

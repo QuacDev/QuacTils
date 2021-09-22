@@ -4,7 +4,10 @@ import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+import org.lwjgl.input.Keyboard;
 
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.io.File;
 
@@ -18,6 +21,14 @@ public class Config extends Vigilant {
 
     )
     public static String apiKey = "";
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Feature Backgrounds",
+            category = "! General",
+            description = "Toggle the background (shadows) of features in game."
+    )
+    public static boolean featureBackgrounds = true;
 
     //region <FPS Counter>
     @Property(
@@ -82,6 +93,23 @@ public class Config extends Vigilant {
     )
     public static Color coordinatesColor = Color.WHITE;
     //endregion
+
+    //region <BlockOverlay>
+    /*@Property(
+            type = PropertyType.SWITCH,
+            name = "! Enabled",
+            category = "LookInfo"
+    )*/
+    public static boolean lookInfo = false;
+
+    /*@Property(
+            type = PropertyType.COLOR,
+            name = "Main Color",
+            category = "LookInfo"
+    )*/
+    public static Color lookInfoColor = Color.WHITE;
+    //endregion
+
 
     public Config(File file) {
         super(file);
