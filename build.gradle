@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-version= "1.0.3.1"
+version= "1.0.6.2"
 group= "com.quac.quactils"
 archivesBaseName = "QuacTils"
 

@@ -3,7 +3,9 @@ package com.quac.quactils;
 import com.quac.quactils.Gui.GuiHandler;
 import com.quac.quactils.EventHandlers.PlayerEvents;
 import com.quac.quactils.Utils.ChatUtils;
+import com.quac.quactils.commands.FakeMSGCommand;
 import com.quac.quactils.commands.MainCommand;
+import com.quac.quactils.commands.PlayWarningCommand;
 import com.quac.quactils.commands.ToggleBetaFeature;
 import com.quac.quactils.config.Config;
 import gg.essential.vigilance.Vigilance;
@@ -27,7 +29,7 @@ import java.io.File;
 public class Main
 {
     public static final String MODID = "QuacTils";
-    public static final String VERSION = "1.0.3";
+    public static final String VERSION = "1.0.6.2";
     public static Config config;
     private static GuiScreen guiToOpen;
 
@@ -49,6 +51,8 @@ public class Main
         System.out.println("DIRT BLOCK >> "+Blocks.dirt.getUnlocalizedName());
         ClientCommandHandler.instance.registerCommand(new MainCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleBetaFeature());
+        ClientCommandHandler.instance.registerCommand(new PlayWarningCommand());
+        ClientCommandHandler.instance.registerCommand(new FakeMSGCommand());
 
         MinecraftForge.EVENT_BUS.register(new GuiHandler());
         MinecraftForge.EVENT_BUS.register(new PlayerEvents());
@@ -56,6 +60,9 @@ public class Main
 
         ClientRegistry.registerKeyBinding(configKey);
         ClientRegistry.registerKeyBinding(mainMenuKey);
+
+        String hypixelAPIKey = Config.apiKey;
+
     }
 
     @SubscribeEvent

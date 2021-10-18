@@ -11,6 +11,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.MouseEvent;
@@ -59,7 +60,7 @@ public class GuiHandler {
 
             Vec3 v = Minecraft.getMinecraft().thePlayer.getPositionVector();
 
-            int bgWidth = 90;
+            int bgWidth = 100;
 
             //Gui.drawRect(x-2, y-2, x + textWidth + 2, y + fontHeight + 1, new Color(0, 0, 0, 110).getRGB());
             int fontHeight = instance.fontRendererObj.FONT_HEIGHT;
@@ -68,36 +69,36 @@ public class GuiHandler {
                 amountOfFeatures++;
 
                 String fpsText = "FPS: " + Minecraft.getDebugFPS();
-                int x = 5;
+                int x = 6;
                 int y = 5;
 
                 //int textWidth = instance.fontRendererObj.getStringWidth(fpsText);
                 if(Config.featureBackgrounds)
-                    Gui.drawRect(x-1, y-1, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
+                    Gui.drawRect(x-2, y-2, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
                 drawString(fpsText, x, y, Config.fpsCounterColor.getRGB());
             }
 
             if(Config.pingCounter) {
                 amountOfFeatures++;
                 String pingText = "Ping: " + ping;
-                int x = 5;
-                int y = 15;
+                int x = 6;
+                int y = 16;
 
                 //int textWidth = instance.fontRendererObj.getStringWidth(pingText);
                 if(Config.featureBackgrounds)
-                    Gui.drawRect(x-1, y-1, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
+                    Gui.drawRect(x-2, y-2, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
                 drawString(pingText, x, y, Config.pingCounterColor.getRGB());
             }
 
             if(Config.cpsCounter) {
                 amountOfFeatures++;
                 String cpsText = "CPS: " + lcps + " | " + rcps;
-                int x = 5;
-                int y = 25;
+                int x = 6;
+                int y = 27;
 
                 //int textWidth = instance.fontRendererObj.getStringWidth(cpsText);
                 if(Config.featureBackgrounds)
-                    Gui.drawRect(x-1, y-1, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
+                    Gui.drawRect(x-2, y-2, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
                 drawString(cpsText, x, y, Config.cpsCounterColor.getRGB());
             }
 
@@ -107,16 +108,48 @@ public class GuiHandler {
                 int yCoords = (int)v.yCoord;
                 int zCoords = (int)v.zCoord;
 
-                int x = 5;
-                int y = 35;
+                double pitch = Minecraft.getMinecraft().thePlayer.rotationPitch;
+                double yaw = MathHelper.wrapAngleTo180_float(Minecraft.getMinecraft().thePlayer.rotationYaw);
 
-                //int textWidth = instance.fontRendererObj.getStringWidth(coordsText);
-                if(Config.featureBackgrounds)
-                    Gui.drawRect(x-1, y-1, x + bgWidth, y + fontHeight * 3 + 1, new Color(0, 0, 0, 110).getRGB());
+                pitch = Math.round(pitch * 100.0)/ 100.0;
+                yaw = Math.round(yaw * 100.0)/ 100.0;
 
-                drawString("X: " + xCoords, x, y, Config.coordinatesColor.getRGB());
-                drawString("Y: " + yCoords, x, y + 9, Config.coordinatesColor.getRGB());
-                drawString("Z: " + zCoords, x, y + 18, Config.coordinatesColor.getRGB());
+                int x = 6;
+                int y = 38;
+
+                String coordsText = "XYZ: " + xCoords + ", " + yCoords + ", " + zCoords;
+                String pitchYawText = "PY: " + pitch + ", " + yaw;
+
+                if(Config.compactCoordinates) {
+                    if(Config.featureBackgrounds) {
+                        if(!Config.pitchAndYaw) {
+                            Gui.drawRect(x - 2, y - 2, x + bgWidth, y + fontHeight, new Color(0, 0, 0, 110).getRGB());
+                        } else {
+                            Gui.drawRect(x - 2, y - 2, x + bgWidth, y + fontHeight * 2 + 2, new Color(0, 0, 0, 110).getRGB());
+                        }
+                    }
+
+                    drawString(coordsText, x, y, Config.coordinatesColor.getRGB());
+                    if(Config.pitchAndYaw) {
+                        drawString(pitchYawText, x, y + 11, Config.coordinatesColor.getRGB());
+                    }
+                } else {
+                    if(Config.featureBackgrounds) {
+                        if(Config.pitchAndYaw) {
+                            Gui.drawRect(x-2, y-2, x + bgWidth, y + fontHeight * 4 + 6, new Color(0, 0, 0, 110).getRGB());
+                        } else {
+                            Gui.drawRect(x-2, y-2, x + bgWidth, y + fontHeight * 3 + 4, new Color(0, 0, 0, 110).getRGB());
+                        }
+                    }
+
+                    drawString("X: " + xCoords, x, y, Config.coordinatesColor.getRGB());
+                    drawString("Y: " + yCoords, x, y + 11, Config.coordinatesColor.getRGB());
+                    drawString("Z: " + zCoords, x, y + 22, Config.coordinatesColor.getRGB());
+
+                    if(Config.pitchAndYaw) {
+                        drawString(pitchYawText, x, y + 33, Config.coordinatesColor.getRGB());
+                    }
+                }
             }
 
             if(Config.lookInfo) {

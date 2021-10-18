@@ -5,7 +5,7 @@ import com.quac.quactils.Main;
 import com.quac.quactils.Utils.ChatUtils;
 import com.quac.quactils.Utils.Color;
 import com.quac.quactils.Utils.TickDelay;
-import com.quac.quactils.config.Config;
+import com.quac.quactils.core.Warnings;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -13,21 +13,20 @@ import net.minecraft.command.ICommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainCommand extends CommandBase {
+public class PlayWarningCommand extends CommandBase {
     @Override
     public String getCommandName() {
-        return "quactils";
+        return "playwarning";
     }
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "quactils";
+        return "playwarning";
     }
 
     @Override
     public List<String> getCommandAliases() {
-        List<String> aliases = new ArrayList<>();
-        aliases.add("qt");
+        List<String> aliases = new ArrayList<>();;
         return aliases;
     }
 
@@ -38,20 +37,20 @@ public class MainCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        if(args.length == 0 || args[0].equalsIgnoreCase("config")) {
-            Runnable runnable = () -> Main.setGui(new MainScreen());
-            new TickDelay(runnable, 1);
-        } else if(args.length == 1) {
+        if(args.length != 1) {
+            ChatUtils.addMsg(Color.translate("&cWarning not found! Please use '/playwarning list' for a list of the warnings"));
+        } else {
             switch (args[0].toLowerCase()) {
-                case "version":
-                    ChatUtils.addMsg(Color.translate("&aCurrently using " + Main.MODID + " version: " + Main.VERSION));
-                    break;
-                case "help":
-                    ChatUtils.addMsg(Color.translate("&aCurrent arguments: 'help', 'config', 'version'"));
+                case "worm": Warnings.playWormWarning(); break;
+                case "ender_piece": Warnings.playEnderPieceWarning("piece"); break;
+                case "glacite_piece": Warnings.playGlacitePieceWarning("piece"); break;
+                case "special_zealot": Warnings.playSpecialZealotWarning(); break;
+                case "list":
+                    ChatUtils.addMsg(Color.translate("&aCurrent warnings: 'worm', 'ender_piece', 'glacite_piece', 'special_zealot'"));
                     break;
                 default:
                 case "":
-                    ChatUtils.addMsg(Color.translate("&cArgument not found! Please use '/qt help' for a list of the arguments"));
+                    ChatUtils.addMsg(Color.translate("&cWarning not found! Please use '/playwarning list' for a list of the warnings"));
                     break;
             }
         }

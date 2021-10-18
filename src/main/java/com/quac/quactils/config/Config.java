@@ -87,6 +87,20 @@ public class Config extends Vigilant {
     public static boolean coordinates = true;
 
     @Property(
+            type = PropertyType.SWITCH,
+            name = "Compact Coordinates",
+            category = "Coordinates"
+    )
+    public static boolean compactCoordinates = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Pitch And Yaw",
+            category = "Coordinates"
+    )
+    public static boolean pitchAndYaw = false;
+
+    @Property(
             type = PropertyType.COLOR,
             name = "Color",
             category = "Coordinates"
@@ -108,6 +122,46 @@ public class Config extends Vigilant {
             category = "LookInfo"
     )*/
     public static Color lookInfoColor = Color.WHITE;
+    //endregion
+
+    //region <Quality Of Life>
+    //endregion
+
+    //region <SkyBlock>
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Worm Warning",
+            category = "Skyblock"
+    )
+    public static boolean skyblockWormWarning = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Glacite Armor Warning",
+            category = "Skyblock"
+    )
+    public static boolean skyblockGlaciteArmorWarning = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Ender Armor Warning",
+            category = "Skyblock"
+    )
+    public static boolean skyblockEnderArmorWarning = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Special Zealot Warning",
+            category = "Skyblock"
+    )
+    public static boolean skyblockSpecialZealotWarning = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Lobby Day",
+            category = "Skyblock"
+    )
+    public static boolean skyblockLobbyDay = true;
     //endregion
 
 
