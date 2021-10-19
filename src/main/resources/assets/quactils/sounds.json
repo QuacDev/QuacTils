@@ -1,0 +1,12 @@
+{
+  "mob.dream.teleport": {
+  "sounds": [{ "name": "mob/dream/teleport", "stream": false }], "category": "hostile" },
+  "mob.dream.sayloud": {
+  "sounds": [{ "name": "mob/dream/sayloud", "stream": false }], "category": "hostile" },
+  "mob.dream.hit": {
+  "sounds": [{ "name": "mob/dream/hit", "stream": false }], "category": "hostile" },
+  "mob.dream.die": {
+  "sounds": [{ "name": "mob/dream/die", "stream": false }], "category": "hostile" },
+  "mob.dream.mask": {
+  "sounds": [{ "name": "mob/dream/mask", "stream": false }], "category": "hostile" }
+}

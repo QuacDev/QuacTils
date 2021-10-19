@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-version= "1.0.6.2"
+version= "1.0.7"
 group= "com.quac.quactils"
 archivesBaseName = "QuacTils"
 
@@ -62,6 +62,15 @@ processResources
         exclude 'mcmod.info'
     }
 }
+task moveResources {
+    doLast {
+        ant.move file: "${buildDir}/resources/main",
+                todir: "${buildDir}/classes/java"
+    }
+}
+moveResources.dependsOn processResources
+classes.dependsOn moveResources
+
 jar {
     enabled = false
 }

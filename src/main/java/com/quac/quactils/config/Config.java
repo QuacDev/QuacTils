@@ -30,6 +30,19 @@ public class Config extends Vigilant {
     )
     public static boolean featureBackgrounds = true;
 
+    //region <RandomStuff>
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Dreamerman (REQUIRES RESTART!)",
+            description = "Turns endermen into dream.",
+            category = "I Dont Know anymore"
+    )
+    public static boolean dreamermanFeature = false;
+
+    //endregion
+
+
     //region <FPS Counter>
     @Property(
             type = PropertyType.SWITCH,
@@ -162,6 +175,7 @@ public class Config extends Vigilant {
             category = "Skyblock"
     )
     public static boolean skyblockLobbyDay = true;
+
     //endregion
 
 

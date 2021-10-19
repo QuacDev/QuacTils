@@ -1,7 +1,9 @@
 package com.quac.quactils;
 
+import com.quac.quactils.EventHandlers.EndermanHandler;
 import com.quac.quactils.Gui.GuiHandler;
 import com.quac.quactils.EventHandlers.PlayerEvents;
+import com.quac.quactils.Overlays.EndermanOverlay;
 import com.quac.quactils.Utils.ChatUtils;
 import com.quac.quactils.commands.FakeMSGCommand;
 import com.quac.quactils.commands.MainCommand;
@@ -10,12 +12,17 @@ import com.quac.quactils.commands.ToggleBetaFeature;
 import com.quac.quactils.config.Config;
 import gg.essential.vigilance.Vigilance;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.model.*;
+import net.minecraft.client.renderer.block.model.ModelBlock;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -29,7 +36,7 @@ import java.io.File;
 public class Main
 {
     public static final String MODID = "QuacTils";
-    public static final String VERSION = "1.0.6.2";
+    public static final String VERSION = "1.0.7";
     public static Config config;
     private static GuiScreen guiToOpen;
 
@@ -57,12 +64,17 @@ public class Main
         MinecraftForge.EVENT_BUS.register(new GuiHandler());
         MinecraftForge.EVENT_BUS.register(new PlayerEvents());
         MinecraftForge.EVENT_BUS.register(new Main());
+        MinecraftForge.EVENT_BUS.register(new EndermanHandler());
 
         ClientRegistry.registerKeyBinding(configKey);
         ClientRegistry.registerKeyBinding(mainMenuKey);
 
         String hypixelAPIKey = Config.apiKey;
 
+        if(Config.dreamermanFeature) {
+            RenderingRegistry.registerEntityRenderingHandler(EntityEnderman.class, new
+            EndermanOverlay(Minecraft.getMinecraft().getRenderManager(), new ModelPlayer(0.2f, true), 0.2f));
+        }
     }
 
     @SubscribeEvent

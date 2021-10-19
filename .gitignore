@@ -12,3 +12,4 @@ build
 # other
 eclipse
 run
+/src/main/resources/
