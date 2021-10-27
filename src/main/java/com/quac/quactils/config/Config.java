@@ -18,7 +18,6 @@ public class Config extends Vigilant {
             description = "Api Key used for certain functions",
             category = "! General",
             placeholder = "Not found"
-
     )
     public static String apiKey = "";
 

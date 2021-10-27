@@ -71,6 +71,8 @@ public class PlayerEvents {
             System.out.println(Color.translate(ChatUtils.prefix + "found api key! '" + apiKey + "'"));
             Config.apiKey = apiKey;
             ChatUtils.addMsg(ChatUtils.prefix + "found api key! '" + apiKey + "'");
+            Main.config.markDirty();
+            Main.config.writeData();
         }
 
         if(cfm(Color.translate("You hear the sound of something approaching..."), e) && Config.skyblockWormWarning) {Warnings.playWormWarning();}
