@@ -1,31 +1,78 @@
 package com.quac.quactils.EventHandlers;
 
-import com.quac.quactils.Gui.Screens.MainScreen;
+import com.google.gson.JsonObject;
 import com.quac.quactils.Main;
+import com.quac.quactils.Utils.ApiUtils;
 import com.quac.quactils.Utils.ChatUtils;
 import com.quac.quactils.Utils.Color;
 import com.quac.quactils.Utils.TickDelay;
 import com.quac.quactils.config.Config;
 import com.quac.quactils.core.Warnings;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import gg.essential.api.utils.WebUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import tv.twitch.chat.Chat;
 
-import java.util.Date;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.net.MalformedURLException;
 
 public class PlayerEvents {
     @SubscribeEvent
-    public void onMessageRecieve(ClientChatReceivedEvent e) {
+    public void onMessageRecieve(ClientChatReceivedEvent e) throws MalformedURLException {
+        String msg = e.message.getUnformattedText();
+        if(isFromPlayer(msg)) return;
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        // Friend/Guild join leave hider
+        if(cfm(Color.translate("left."), e) || cfm(Color.translate("joined."), e)) {
+            if(cfm(Color.translate("Friend >"), e)) {
+                e.setCanceled(Config.qolFriendJoinLeaveHider);
+            }
+            if(cfm(Color.translate("Guild >"), e)) {
+                e.setCanceled(Config.qolGuildJoinLeaveHider);
+            }
+        }
+        // Tip hiders
+        if(cfm(Color.translate("You were tipped by"), e)) {
+            if(cfm(Color.translate("in the last minute!"), e)) {
+                e.setCanceled(Config.qolTipHider);
+            }
+        }
+        if(cfm(Color.translate("You tipped"), e)) {
+            e.setCanceled(Config.qolTipHider);
+        }
+        // Guild exp hider
+        if(cfm(Color.translate("You earned"), e)) {
+            if(cfm(Color.translate("GEXP"), e)) {
+                e.setCanceled(Config.qolGuildExpHider);
+            }
+        }
+        // RNG drop copier
+        if(Config.skyblockAutoCopyRng) {
+            if(cfm(Color.translate("CRAZY RARE DROP!"), e)) {
+                ChatUtils.addMsg(Color.translate(ChatUtils.prefix + "automatically copied rng drop message to clipboard"));
+                clipboard.setContents(new StringSelection(msg), null);
+            }
+            if(cfm(Color.translate("INSANE DROP!"), e)) {
+                ChatUtils.addMsg(Color.translate(ChatUtils.prefix + "automatically copied rng drop message to clipboard"));
+                clipboard.setContents(new StringSelection(msg), null);
+            }
+        }
+
+
+        // API GRABBER
+        if(cfm(Color.translate("Your new API key is"), e)) {
+            String apiKey = msg.substring(20);
+            System.out.println(Color.translate(ChatUtils.prefix + "found api key! '" + apiKey + "'"));
+            Config.apiKey = apiKey;
+            ChatUtils.addMsg(ChatUtils.prefix + "found api key! '" + apiKey + "'");
+        }
+
         if(cfm(Color.translate("You hear the sound of something approaching..."), e) && Config.skyblockWormWarning) {Warnings.playWormWarning();}
         if(Config.skyblockEnderArmorWarning) {
             if(cfm(Color.translate("RARE DROP! Ender Helmet"), e)) {Warnings.playEnderPieceWarning("Helmet");}
@@ -40,6 +87,8 @@ public class PlayerEvents {
             if(cfm(Color.translate("RARE DROP! Glacite Boots"), e)) {Warnings.playGlacitePieceWarning("Boots");}
         }
         if(cfm(Color.translate("A special &5Zealot has spawned nearby!"), e) && Config.skyblockSpecialZealotWarning) {Warnings.playSpecialZealotWarning();}
+
+        JsonObject api = Main.apiJson;
     }
 
     boolean canCheckTime = true;
@@ -60,6 +109,10 @@ public class PlayerEvents {
                 }
             }
         }
+    }
+
+    public boolean isFromPlayer(String s) {
+        return s.contains(":");
     }
 
     public boolean cfm(String s, ClientChatReceivedEvent e) {

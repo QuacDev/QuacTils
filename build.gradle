@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-version= "1.0.7"
+version= "1.0.9.1"
 group= "com.quac.quactils"
 archivesBaseName = "QuacTils"
 
@@ -44,6 +44,7 @@ repositories {
 
 dependencies {
     embed("gg.essential:vigilance-1.8.9-forge:180")
+    implementation("gg.essential:essential-1.8.9-forge:1530")
 }
 
 processResources

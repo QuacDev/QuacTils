@@ -34,11 +34,19 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Dreamerman (REQUIRES RESTART!)",
-            description = "Turns endermen into dream.",
-            category = "I Dont Know anymore"
+            name = "Endermen but person (REQUIRES RESTART!)",
+            description = "Turns endermen into selected person.",
+            category = "I Dont Know anymore", subcategory = "Endermen but person"
     )
-    public static boolean dreamermanFeature = false;
+    public static boolean endermenPerson = false;
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Enderman but person skin (REQUIRES RESTART!)",
+            description = "Turns endermen into selected person (If Main feature is enabled).",
+            category = "I Dont Know anymore", subcategory = "Endermen but person"
+    )
+    public static String endermenPersonName = "dream";
 
     //endregion
 
@@ -138,43 +146,87 @@ public class Config extends Vigilant {
     //endregion
 
     //region <Quality Of Life>
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Friend join leave hider",
+            category = "QOL", subcategory = "Spam"
+    )
+    public static boolean qolFriendJoinLeaveHider = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Guild join leave hider",
+            category = "QOL", subcategory = "Spam"
+    )
+    public static boolean qolGuildJoinLeaveHider = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Guild exp hider",
+            category = "QOL", subcategory = "Spam"
+    )
+    public static boolean qolGuildExpHider = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Tip Hider",
+            category = "QOL", subcategory = "Spam"
+    )
+    public static boolean qolTipHider = false;
+
     //endregion
 
     //region <SkyBlock>
     @Property(
             type = PropertyType.SWITCH,
-            name = "Worm Warning",
-            category = "Skyblock"
-    )
-    public static boolean skyblockWormWarning = false;
-
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "Glacite Armor Warning",
-            category = "Skyblock"
-    )
-    public static boolean skyblockGlaciteArmorWarning = false;
-
-    @Property(
-            type = PropertyType.SWITCH,
             name = "Ender Armor Warning",
-            category = "Skyblock"
+            category = "Skyblock", subcategory = "Endermen"
     )
     public static boolean skyblockEnderArmorWarning = false;
 
     @Property(
             type = PropertyType.SWITCH,
             name = "Special Zealot Warning",
-            category = "Skyblock"
+            category = "Skyblock", subcategory = "Endermen"
     )
     public static boolean skyblockSpecialZealotWarning = false;
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Worm Warning",
+            category = "Skyblock", subcategory = "Mining"
+    )
+    public static boolean skyblockWormWarning = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Lobby Day",
-            category = "Skyblock"
+            category = "Skyblock", subcategory = "Mining"
     )
     public static boolean skyblockLobbyDay = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Glacite Armor Warning",
+            category = "Skyblock", subcategory = "Other"
+    )
+    public static boolean skyblockGlaciteArmorWarning = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Auto Copy RNG Drops", description = "Will automatically copy 'Crazy Rare' and 'Insane' drops to your clipboard",
+            category = "Skyblock", subcategory = "Other"
+    )
+    public static boolean skyblockAutoCopyRng = false;
+
+    /*@Property(
+            type = PropertyType.SWITCH,
+            name = "Atoned Horror Helper",
+            description = "Makes screen red if standing inside explosive circle.",
+            category = "Skyblock", subcategory = "Slayer"
+    )
+    public static boolean skyblockAtonedHorrorHelper = false;*/
 
     //endregion
 

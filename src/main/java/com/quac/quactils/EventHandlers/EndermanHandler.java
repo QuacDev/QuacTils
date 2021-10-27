@@ -2,10 +2,8 @@ package com.quac.quactils.EventHandlers;
 
 import com.quac.quactils.Main;
 import com.quac.quactils.config.Config;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -13,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EndermanHandler {
    @SubscribeEvent
     public void onSound(PlaySoundEvent e) {
-        if (Config.dreamermanFeature) {
+        if (Config.endermenPerson) {
             if (e.name.startsWith("mob.endermen")) {
                 System.out.println(e.name);
                 float xPos = e.sound.getXPosF();

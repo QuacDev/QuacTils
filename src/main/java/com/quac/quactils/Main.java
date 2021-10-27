@@ -1,21 +1,18 @@
 package com.quac.quactils;
 
+import com.google.gson.JsonObject;
 import com.quac.quactils.EventHandlers.EndermanHandler;
 import com.quac.quactils.Gui.GuiHandler;
 import com.quac.quactils.EventHandlers.PlayerEvents;
 import com.quac.quactils.Overlays.EndermanOverlay;
+import com.quac.quactils.Utils.ApiUtils;
 import com.quac.quactils.Utils.ChatUtils;
-import com.quac.quactils.commands.FakeMSGCommand;
-import com.quac.quactils.commands.MainCommand;
-import com.quac.quactils.commands.PlayWarningCommand;
-import com.quac.quactils.commands.ToggleBetaFeature;
+import com.quac.quactils.commands.*;
 import com.quac.quactils.config.Config;
 import gg.essential.vigilance.Vigilance;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.model.*;
-import net.minecraft.client.renderer.block.model.ModelBlock;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.init.Blocks;
@@ -31,12 +28,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 @Mod(modid = Main.MODID, version = Main.VERSION)
 public class Main
 {
     public static final String MODID = "QuacTils";
-    public static final String VERSION = "1.0.7";
+    public static final String VERSION = "1.0.9.1";
     public static Config config;
     private static GuiScreen guiToOpen;
 
@@ -48,8 +47,7 @@ public class Main
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) throws IOException {
         Vigilance.initialize();
         config = new Config(new File("./config/config.toml"));
         config.preload();
@@ -60,6 +58,7 @@ public class Main
         ClientCommandHandler.instance.registerCommand(new ToggleBetaFeature());
         ClientCommandHandler.instance.registerCommand(new PlayWarningCommand());
         ClientCommandHandler.instance.registerCommand(new FakeMSGCommand());
+        //ClientCommandHandler.instance.registerCommand(new WormfinderCommand());
 
         MinecraftForge.EVENT_BUS.register(new GuiHandler());
         MinecraftForge.EVENT_BUS.register(new PlayerEvents());
@@ -71,14 +70,22 @@ public class Main
 
         String hypixelAPIKey = Config.apiKey;
 
-        if(Config.dreamermanFeature) {
-            RenderingRegistry.registerEntityRenderingHandler(EntityEnderman.class, new
-            EndermanOverlay(Minecraft.getMinecraft().getRenderManager(), new ModelPlayer(0.2f, true), 0.2f));
+        if(Config.endermenPerson) {
+            RenderingRegistry.registerEntityRenderingHandler(EntityEnderman.class,
+            new EndermanOverlay(Minecraft.getMinecraft().getRenderManager(), new ModelPlayer(0.2f, true), 0.2f));
         }
     }
 
+    public static JsonObject apiJson;
+    int ticks = 0;
+
     @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
+    public void onTick(TickEvent.ClientTickEvent event) throws MalformedURLException {
+        if(!event.phase.equals(TickEvent.Phase.START)) return;
+
+        if(ticks == 1) { refreshApi(); }
+        if(ticks == 20 * 60 * 3) { ticks = 0; }
+
         if (guiToOpen != null) {
             try {
                 System.out.println("Opening GUI...");
@@ -89,5 +96,11 @@ public class Main
             }
             guiToOpen = null;
         }
+
+        ticks++;
+    }
+
+    public static void refreshApi() throws MalformedURLException {
+        apiJson = ApiUtils.getJson().getAsJsonObject();
     }
 }

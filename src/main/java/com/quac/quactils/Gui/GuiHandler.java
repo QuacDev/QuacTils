@@ -2,26 +2,32 @@ package com.quac.quactils.Gui;
 
 import com.quac.quactils.Gui.Screens.MainScreen;
 import com.quac.quactils.Main;
+import com.quac.quactils.Overlays.EndermanOverlay;
+import com.quac.quactils.Utils.SlayerUtil;
 import com.quac.quactils.config.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.awt.image.ColorModel;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +67,21 @@ public class GuiHandler {
 
             //Gui.drawRect(x-2, y-2, x + textWidth + 2, y + fontHeight + 1, new Color(0, 0, 0, 110).getRGB());
             int fontHeight = instance.fontRendererObj.FONT_HEIGHT;
+            /*if(Minecraft.getMinecraft().thePlayer != null) {
+                BlockPos pos = Minecraft.getMinecraft().thePlayer.playerLocation.add(0, -1, 0);
+                if(pos != null) {
+                    Block be = Minecraft.getMinecraft().theWorld.getBlockState(pos).getBlock();
+                    if(be != null)
+                        System.out.println(be.getLocalizedName() + " / " + Block.getIdFromBlock(be));
+                }
+            }*/
+
+
+            //if(Config.skyblockAtonedHorrorHelper && SlayerUtil.isRevTier5()) {
+                //if(SlayerUtil.getRevTier5Block(be)) {
+                //    Gui.drawRect(0, 0, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight, new Color(255,0,0,110).getRGB());
+                //}
+            //}
 
             if(Config.fpsCounter) {
                 amountOfFeatures++;
